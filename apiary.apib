@@ -1201,112 +1201,96 @@ Status related resources of the **Shorewall API**
     + Body
             
             {
-                "id": 1,
-                "name": "default",
-                "providers": [
-                  {
-                    "weight": 1,
-                    "packageId": 1,
-                    "interface": "ppp0",
-                    "id": 1
-                  },
-                  {
-                    "weight": 1,
-                    "packageId": 1,
-                    "interface": "eth0",
-                    "id": 2
-                  }
-                ],
-                "rules": [
-                  {
-                    "protocol": "tcp",
-                    "protocolDetail": "22",
-                    "destination": "eth1",
-                    "source": "eth0",
-                    "packageId": 1,
-                    "action": "ACCEPT",
-                    "id": 1
-                  },
-                  {
-                    "protocol": "icmp",
-                    "protocolDetail": "echo-request",
-                    "destination": "fw",
-                    "source": "eth0",
-                    "packageId": 1,
-                    "action": "ACCEPT",
-                    "id": 2
-                  }
-                ],
-                "combinedQos": [
-                  {
-                    "protocol": "tcp",
-                    "port": "80",
-                    "priority": 3,
-                    "rate": "1000",
-                    "packageId": 1,
-                    "interface": "eth0",
-                    "ceil": "2000",
-                    "id": 1
-                  },
-                  {
-                    "protocol": "tcp",
-                    "port": "22",
-                    "priority": 2,
-                    "rate": "1000",
-                    "packageId": 1,
-                    "interface": "eth1",
-                    "ceil": "2000",
-                    "id": 2
-                  }
-                ],
-                "nat": [],
-                "policy": [
-                  {
-                    "connlimitMask": "",
-                    "limitBurst": "",
-                    "logLevel": "",
-                    "destination": "all",
-                    "source": "all",
-                    "packageId": 1,
-                    "policy": "ACCEPT",
-                    "id": 1,
-                    "deletable": 0
-                  },
-                  {
-                    "connlimitMask": "",
-                    "limitBurst": "",
-                    "logLevel": "",
-                    "destination": "eth0",
-                    "source": "wlan0",
-                    "packageId": 1,
-                    "policy": "ACCEPT",
-                    "id": 2,
-                    "deletable": 1
-                  },
-                  {
-                    "connlimitMask": "",
-                    "limitBurst": "",
-                    "logLevel": "",
-                    "destination": "ppp0",
-                    "source": "wlan0",
-                    "packageId": 1,
-                    "policy": "ACCEPT",
-                    "id": 3,
-                    "deletable": 1
-                  }
-                ],
-                "tunnels": [
-                  {
-                    "zone": "tun0",
-                    "gateway": "0.0.0.0/0",
-                    "packageId": 1,
-                    "type": "ipsec",
-                    "id": 1,
-                    "gatewayZones": "gw"
-                  }
-                ]
-              }
- 
+              "name": "default",
+              "policy": [
+                {
+                  "deletable": 0,
+                  "connlimitMask": "",
+                  "limitBurst": "",
+                  "logLevel": "",
+                  "destination": "all",
+                  "source": "all",
+                  "packageId": 1,
+                  "policy": "ACCEPT",
+                  "id": 1
+                }
+              ],
+              "providers": [
+                {
+                  "interface": "eth0",
+                  "weight": "1",
+                  "id": 1,
+                  "packageId": 1
+                },
+                {
+                  "interface": "eth1",
+                  "weight": "1",
+                  "id": 2,
+                  "packageId": 1
+                },
+                {
+                  "interface": "wlan0",
+                  "weight": "1",
+                  "id": 3,
+                  "packageId": 1
+                },
+                {
+                  "interface": "wlan1",
+                  "weight": "1",
+                  "id": 4,
+                  "packageId": 1
+                },
+                {
+                  "interface": "ppp0",
+                  "weight": "1",
+                  "id": 5,
+                  "packageId": 1
+                },
+                {
+                  "interface": "ppp1",
+                  "weight": "2",
+                  "id": 6,
+                  "packageId": 1
+                }
+              ],
+              "dnats": [
+                {
+                  "protocol": "tcp",
+                  "protocolPort": "5000",
+                  "serverIp": "10.10.0.1",
+                  "packageId": 1,
+                  "serverPort": "80",
+                  "destination": "eth1",
+                  "source": "eth0",
+                  "id": 1
+                },
+                {
+                  "protocol": "udp",
+                  "protocolPort": "1234",
+                  "serverIp": "10.10.0.1",
+                  "packageId": 1,
+                  "serverPort": "5555",
+                  "destination": "fw",
+                  "source": "eth0",
+                  "id": 2
+                }
+              ],
+              "combinedQos": [],
+              "rules": [
+                {
+                  "protocol": "icmp",
+                  "action": "ACCEPT",
+                  "source": "wlan0",
+                  "protocolDetail": null,
+                  "destination": "wlan1",
+                  "packageId": 1,
+                  "id": 1
+                }
+              ],
+              "tunnels": [],
+              "id": 1
+            }
+
  
  
  
@@ -1326,161 +1310,105 @@ Status related resources of the **Shorewall API**
 
 
             {
-                "collection": [
-                  {
-                    "package": {
-                      "providers": [
-                        {
-                          "weight": "1",
-                          "gateway": "-",
-                          "packageId": 1,
-                          "interface": "ppp0",
-                          "copy": "eth2,eth3",
-                          "id": 1
-                        },
-                        {
-                          "weight": "1",
-                          "gateway": "30.40.50.61",
-                          "packageId": 1,
-                          "interface": "eth0",
-                          "copy": "eth2,eth3",
-                          "id": 2
-                        }
-                      ],
-                      "rules": [
-                        {
-                          "protocol": "tcp",
-                          "protocolDetail": "22",
-                          "destination": "eth1",
-                          "source": "eth0",
-                          "packageId": 1,
-                          "action": "ACCEPT",
-                          "id": 1
-                        },
-                        {
-                          "protocol": "icmp",
-                          "protocolDetail": "echo-request",
-                          "destination": "fw",
-                          "source": "eth0",
-                          "packageId": 1,
-                          "action": "ACCEPT",
-                          "id": 2
-                        }
-                      ],
-                      "combinedQos": [
-                        {
-                          "protocol": "tcp",
-                          "port": "80",
-                          "priority": 3,
-                          "rate": "1000",
-                          "packageId": 1,
-                          "interface": "eth0",
-                          "ceil": "2000",
-                          "id": 1
-                        },
-                        {
-                          "protocol": "tcp",
-                          "port": "22",
-                          "priority": 2,
-                          "rate": "1000",
-                          "packageId": 1,
-                          "interface": "eth1",
-                          "ceil": "2000",
-                          "id": 2
-                        }
-                      ],
-                      "nat": [],
-                      "policy": [
-                        {
-                          "connlimitMask": "",
-                          "limitBurst": "",
-                          "logLevel": "",
-                          "destination": "all",
-                          "source": "all",
-                          "packageId": 1,
-                          "policy": "ACCEPT",
-                          "id": 1,
-                          "deletable": 0
-                        },
-                          {
-                            "connlimitMask": "",
-                            "limitBurst": "",
-                            "logLevel": "",
-                            "destination": "eth0",
-                            "source": "wlan0",
-                            "packageId": 1,
-                            "policy": "ACCEPT",
-                            "id": 2,
-                            "deletable": 1
-                          },
-                          {
-                            "connlimitMask": "",
-                            "limitBurst": "",
-                            "logLevel": "",
-                            "destination": "ppp0",
-                            "source": "wlan0",
-                            "packageId": 1,
-                            "policy": "ACCEPT",
-                            "id": 3,
-                            "deletable": 1
-                          }
-                      ],
-                      "tunnels": [
-                        {
-                          "zone": "tun0",
-                          "gateway": "0.0.0.0/0",
-                          "packageId": 1,
-                          "type": "ipsec",
-                          "id": 1,
-                          "gatewayZones": "gw"
-                        }
-                      ]
-                    },
-                    "id": 1,
-                    "name": "default"
+              "total": 1,
+              "collection": [
+                {
+                  "package": {
+                    "dnats": [
+                      {
+                        "protocol": "tcp",
+                        "protocolPort": "5000",
+                        "serverIp": "10.10.0.1",
+                        "packageId": 1,
+                        "serverPort": "80",
+                        "destination": "eth1",
+                        "source": "eth0",
+                        "id": 1
+                      },
+                      {
+                        "protocol": "udp",
+                        "protocolPort": "1234",
+                        "serverIp": "10.10.0.1",
+                        "packageId": 1,
+                        "serverPort": "5555",
+                        "destination": "fw",
+                        "source": "eth0",
+                        "id": 2
+                      }
+                    ],
+                    "combinedQos": [],
+                    "providers": [
+                      {
+                        "interface": "eth0",
+                        "weight": "1",
+                        "id": 1,
+                        "packageId": 1
+                      },
+                      {
+                        "interface": "eth1",
+                        "weight": "1",
+                        "id": 2,
+                        "packageId": 1
+                      },
+                      {
+                        "interface": "wlan0",
+                        "weight": "1",
+                        "id": 3,
+                        "packageId": 1
+                      },
+                      {
+                        "interface": "wlan1",
+                        "weight": "1",
+                        "id": 4,
+                        "packageId": 1
+                      },
+                      {
+                        "interface": "ppp0",
+                        "weight": "1",
+                        "id": 5,
+                        "packageId": 1
+                      },
+                      {
+                        "interface": "ppp1",
+                        "weight": "2",
+                        "id": 6,
+                        "packageId": 1
+                      }
+                    ],
+                    "rules": [
+                      {
+                        "protocol": "icmp",
+                        "action": "ACCEPT",
+                        "source": "wlan0",
+                        "protocolDetail": null,
+                        "destination": "wlan1",
+                        "packageId": 1,
+                        "id": 1
+                      }
+                    ],
+                    "policy": [
+                      {
+                        "deletable": 0,
+                        "connlimitMask": "",
+                        "limitBurst": "",
+                        "logLevel": "",
+                        "destination": "all",
+                        "source": "all",
+                        "packageId": 1,
+                        "policy": "ACCEPT",
+                        "id": 1
+                      }
+                    ],
+                    "tunnels": []
                   },
-                  {
-                    "package": {
-                      "providers": [],
-                      "rules": [],
-                      "combinedQos": [],
-                      "nat": false,
-                      "policy": [],
-                      "tunnels": [
-                        {
-                          "zone": "tun0",
-                          "gateway": "0.0.0.0/0",
-                          "packageId": 2,
-                          "type": "openvpn:7777",
-                          "id": 2,
-                          "gatewayZones": "gw"
-                        }
-                      ]
-                    },
-                    "id": 2,
-                    "name": "my_package"
-                  },
-                  {
-                    "package": {
-                      "providers": [],
-                      "rules": [],
-                      "combinedQos": [],
-                      "nat": false,
-                      "policy": [],
-                      "tunnels": []
-                    },
-                    "id": 3,
-                    "name": "test_package"
-                  }
-                ],
-                "total": 3,
-                "name": "test_web_package",
-                "resources": [
-                  1,
-                  2,
-                  3
-                ]
-              }
+                  "id": 1,
+                  "name": "default"
+                }
+              ],
+              "resources": [
+                1
+              ]
+            }
  
  
  
@@ -1527,15 +1455,6 @@ Status related resources of the **Shorewall API**
                 "id": 1,
                 "name": "default"
             }
-
-
-
-
-
-
-
-
-
 
 # Group Executer
 ## Executer [/system/executer/program]
