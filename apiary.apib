@@ -1,0 +1,2436 @@
+FORMAT: 1A
+HOST: http://www.google.com
+
+# Sanji API
+Cellulars API is a *Point-to-Point Protocol* service which makes your cellular connections work smoothly.
+
+# Group Cellulars
+Cellulars related resources of the **Cellulars API**
+
+## Cellular Collection [/network/cellular{?collection}]
+### List all Cellulars [GET]
+
++ Parameters
+    + collection (optional, boolean) ... if true, return all collection's data embedd with cellular
+
++ Response 200 (application/json)
+
+        {
+            "collection": [
+                {
+                  "signal": 10,
+                  "ip": "",
+                  "operatorName": "",
+                  "currentStatus": 1,
+                  "connectionType": 1,
+                  "enable": 1,
+                  "pinCode": "",
+                  "pingAddress": "8.8.8.8",
+                  "name": "ppp1",
+                  "username": "",
+                  "dialNumber": "*99#",
+                  "id": 1,
+                  "enablePing": 1,
+                  "idleTime": 10,
+                  "apn": "internet",
+                  "enableAuth": 0,
+                  "pingInterval": 60,
+                  "password": "",
+                  "applicationPort": "/dev/ttyUSB2",
+                  "modemPort": "/dev/ttyUSB3"
+                },
+                {
+                  "signal": 10,
+                  "ip": "",
+                  "operatorName": "",
+                  "currentStatus": 0,
+                  "connectionType": 2,
+                  "enable": 1,
+                  "pinCode": "",
+                  "pingAddress": "8.8.8.8",
+                  "name": "ppp2",
+                  "username": "",
+                  "dialNumber": "*99#",
+                  "id": 2,
+                  "enablePing": 1,
+                  "idleTime": 10,
+                  "apn": "internet",
+                  "enableAuth": 0,
+                  "pingInterval": 60,
+                  "password": "",
+                  "applicationPort": "/dev/ttyUSB7",
+                  "modemPort": "/dev/ttyUSB8"
+                },
+                {
+                  "signal": 10,
+                  "ip": "",
+                  "operatorName": "",
+                  "currentStatus": 1,
+                  "connectionType": 0,
+                  "enable": 1,
+                  "pinCode": "",
+                  "pingAddress": "8.8.8.8",
+                  "name": "ppp3",
+                  "username": "",
+                  "dialNumber": "*99#",
+                  "id": 3,
+                  "enablePing": 1,
+                  "idleTime": 10,
+                  "apn": "internet",
+                  "enableAuth": 0,
+                  "pingInterval": 60,
+                  "password": "",
+                  "applicationPort": "/dev/ttyUSB12",
+                  "modemPort": "/dev/ttyUSB13"
+                }
+            ],
+            "total": 3,
+            "resources": [
+              1,
+              2,
+              3
+            ]
+          }
+
+## Cellular [/network/cellular/{id}]
+A single Cellular object with all its details
+
+Acceptable input data:
+
+- enable 0:disconnect, 1:connect
+- apn default: internet
+- dialNumber default: *99#
+- enableAuth 0:on, 1:off
+- username
+- password
+- connectionType 0:on-demand, 1:manual, 2:persist
+- idleTime disconnect when no commucation in *idleTime* seconds unit: seconds, this will be apply when *connectionType* set to 0 (on-demand)
+- pinCode
+- enablePing default: 1
+- pingInterval default: 60 unit: seconds
+- pingAddress default: 8.8.8.8 google nameserver
+
+Read-only data:
+
+- ip
+- operatorName
+- currentStatus
+- applicationPort
+- modemPort
+
++ Parameters
+    + id (required, number, `1`) ... Numeric `id` of the Cellular to perform action with. Has example value.
+
++ Model (application/json)
+
+    + Body
+    
+            {
+              "signal": 10,
+              "ip": "",
+              "operatorName": "",
+              "currentStatus": 1,
+              "connectionType": 2,
+              "enable": 1,
+              "pinCode": "",
+              "pingAddress": "8.8.8.8",
+              "name": "ppp1",
+              "username": "",
+              "dialNumber": "*99#",
+              "id": 1,
+              "enablePing": 1,
+              "idleTime": 10,
+              "apn": "internet",
+              "enableAuth": 0,
+              "pingInterval": 60,
+              "password": "",
+              "applicationPort": "/dev/ttyUSB2",
+              "modemPort": "/dev/ttyUSB3"
+            }
+
+### Retrieve a Cellular [GET]
++ Response 200 (application/json)
+
+    [Cellular][]
+
++ Response 404 (application/json)
+
+    + Body
+
+            {"message": "Cellular not found."}
+
+### Update a Cellular [PUT]
++ Response 200 (application/json)
+
+    [Cellular][]
+
++ Response 404 (application/json)
+
+    + Body
+
+            {"message": "Cellular not found."}
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {"message": "No input data."}
+
+### Remove a Cellular [DELETE]
++ Response 204
+
+
+# Group Status
+Status related resources of the **Status API**
+
+## Status [/system/status]
+A single Cellular object with all its details
+
+### Retrieve Status [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "hostname": "Moxa",
+              "uptime": "up 3 days, 21:06",
+              "firmware": "UC-8481-LX version 3.0",
+              "cpu": [{"time": 1, "value": 1.45}, {"time": 10, "value": 1.45}, {"time": 15, "value": 1.45}],
+              "location": {
+                "latitude": 26.983949495,
+                "longitude": 121.551980142
+              },
+              "load": {
+                "memFree": "448396",
+                "memUsed": "67916",
+                "memTotal": "516312",
+                "cpuUsage": "3.5"
+              },
+              "profile": {
+                "cellular": {
+                    "name":["ppp0", "ppp1", "ppp2"]
+                },
+                "ethernet": {
+                    "name":["eth0", "eth1"]
+                },
+                "wireless": {
+                    "name":["wlan0", "wlan1"]
+                }
+              },
+              "network": {
+                "wlan0": {
+                  "inet6": null,
+                  "netmask": null,
+                  "broadcast": null,
+                  "txbytes": "0",
+                  "rxbytes": "0",
+                  "prefixlen": null,
+                  "ptp": null,
+                  "ether": "00:90:e8:3b:f4:ed",
+                  "device": "wlan0",
+                  "scopeid": null,
+                  "inet": null
+                },
+                "lo": {
+                  "rxbytes": "1164",
+                  "prefixlen": "128",
+                  "txbytes": "1164",
+                  "netmask": "255.0.0.0",
+                  "ptp": null,
+                  "device": "lo",
+                  "ether": null,
+                  "broadcast": null,
+                  "scopeid": "host",
+                  "inet6": "::1/128",
+                  "inet": "127.0.0.1"
+                },
+                "eth1": {
+                  "rxbytes": "0",
+                  "prefixlen": "64",
+                  "txbytes": "168",
+                  "netmask": "255.255.255.0",
+                  "inet6": "fe80::290:e8ff:fe00:50/64",
+                  "broadcast": "192.168.4.255",
+                  "scopeid": "link",
+                  "ptp": null,
+                  "ether": "00:90:e8:00:00:50",
+                  "device": "eth1",
+                  "inet": "192.168.4.127"
+                },
+                "ppp1": {
+                  "rxbytes": "60",
+                  "prefixlen": null,
+                  "txbytes": "117",
+                  "netmask": "255.255.255.255",
+                  "inet6": null,
+                  "broadcast": null,
+                  "ptp": "10.64.64.65",
+                  "ether": null,
+                  "device": "ppp1",
+                  "scopeid": null,
+                  "inet": "100.65.159.198"
+                },
+                "eth0": {
+                  "rxbytes": "920060",
+                  "prefixlen": "64",
+                  "txbytes": "233938",
+                  "netmask": "255.255.255.0",
+                  "inet6": "fe80::290:e8ff:fe11:9339/64",
+                  "broadcast": "192.168.27.255",
+                  "scopeid": "link",
+                  "ptp": null,
+                  "ether": "00:90:e8:11:93:39",
+                  "device": "eth0",
+                  "inet": "192.168.27.205"
+                }
+              },
+              "storage": {
+                "/dev/shm": {
+                  "use%": "0%",
+                  "size": "253M",
+                  "mounted_on": "/dev/shm",
+                  "used": "0",
+                  "filesystem": "tmpfs",
+                  "avail": "253M"
+                },
+                "/dev": {
+                  "use%": "2%",
+                  "size": "10M",
+                  "mounted_on": "/dev",
+                  "used": "184K",
+                  "filesystem": "udev",
+                  "avail": "9.9M"
+                },
+                "/lib/init/rw": {
+                  "use%": "0%",
+                  "size": "253M",
+                  "mounted_on": "/lib/init/rw",
+                  "used": "0",
+                  "filesystem": "tmpfs",
+                  "avail": "253M"
+                },
+                "/": {
+                  "use%": "78%",
+                  "size": "459M",
+                  "mounted_on": "/",
+                  "used": "352M",
+                  "filesystem": "rootfs",
+                  "avail": "103M"
+                }
+              }
+            }
+
+## Status [/system/status/graph_data]
+System status graph CPU & MEM
+
+### Retrieve Status [GET]
++ Response 200 (application/json)
+
+    + Body
+
+            {"values":[{"t":"2014/11/04 11:09:39","v":96.5},{"t":"2014/11/04 11:11:38","v":48.5},{"t":"2014/11/04 11:12:38","v":36.4},{"t":"2014/11/04 11:13:38","v":35.7},{"t":"2014/11/04 11:14:39","v":35.5},{"t":"2014/11/04 11:15:40","v":34.5},{"t":"2014/11/04 11:16:40","v":36.5},{"t":"2014/11/04 11:17:40","v":36.3},{"t":"2014/11/04 11:18:41","v":36.4},{"t":"2014/11/04 11:19:42","v":47.7},{"t":"2014/11/04 11:20:42","v":34.3},{"t":"2014/11/04 11:21:43","v":38.5},{"t":"2014/11/04 11:22:43","v":35.5},{"t":"2014/11/04 11:23:44","v":35.3},{"t":"2014/11/04 11:24:45","v":50.9},{"t":"2014/11/04 11:25:47","v":48.9},{"t":"2014/11/04 11:26:46","v":42.1},{"t":"2014/11/04 11:27:46","v":39.9},{"t":"2014/11/04 11:28:47","v":38.1},{"t":"2014/11/04 11:29:47","v":39.2},{"t":"2014/11/04 11:30:49","v":84.9},{"t":"2014/11/04 11:31:49","v":45.5},{"t":"2014/11/04 11:32:49","v":34.6},{"t":"2014/11/04 11:33:50","v":34.6},{"t":"2014/11/04 11:34:51","v":34.8},{"t":"2014/11/04 11:35:52","v":38.7},{"t":"2014/11/04 11:36:52","v":34.5},{"t":"2014/11/04 11:37:52","v":36.3},{"t":"2014/11/04 11:38:52","v":85.1},{"t":"2014/11/04 11:39:54","v":92.3},{"t":"2014/11/04 11:40:55","v":43.9},{"t":"2014/11/04 11:41:54","v":37.1},{"t":"2014/11/04 11:42:56","v":34.9},{"t":"2014/11/04 11:43:55","v":24.1},{"t":"2014/11/04 11:44:55","v":38.2},{"t":"2014/11/04 11:45:57","v":45.1},{"t":"2014/11/04 11:46:57","v":45.1},{"t":"2014/11/04 11:47:57","v":37.4},{"t":"2014/11/04 11:48:57","v":39},{"t":"2014/11/04 11:49:57","v":44.4},{"t":"2014/11/04 11:50:57","v":38.6},{"t":"2014/11/04 11:51:58","v":39.5},{"t":"2014/11/04 11:52:58","v":38.6},{"t":"2014/11/04 11:53:58","v":38},{"t":"2014/11/04 11:54:59","v":49.1},{"t":"2014/11/04 11:56:00","v":39.5},{"t":"2014/11/04 11:57:00","v":63.1},{"t":"2014/11/04 11:58:02","v":41.3},{"t":"2014/11/04 11:59:02","v":40},{"t":"2014/11/04 12:00:02","v":37.4},{"t":"2014/11/04 12:01:02","v":38.3},{"t":"2014/11/04 12:02:02","v":37.3},{"t":"2014/11/04 12:03:03","v":37.1},{"t":"2014/11/04 12:04:03","v":37.5},{"t":"2014/11/04 12:05:03","v":36.9},{"t":"2014/11/04 12:06:04","v":36.9},{"t":"2014/11/04 12:07:04","v":36.6},{"t":"2014/11/04 12:08:05","v":38},{"t":"2014/11/04 12:09:06","v":37.2},{"t":"2014/11/04 12:10:07","v":37},{"t":"2014/11/04 12:11:07","v":37.1},{"t":"2014/11/04 12:12:07","v":35.5},{"t":"2014/11/04 12:13:07","v":37.8},{"t":"2014/11/04 12:14:07","v":36.9},{"t":"2014/11/04 12:15:08","v":38.9},{"t":"2014/11/04 12:16:08","v":37.7},{"t":"2014/11/04 12:17:08","v":39.5},{"t":"2014/11/04 12:18:08","v":38.6},{"t":"2014/11/04 12:19:08","v":40.2},{"t":"2014/11/04 12:20:09","v":37.6},{"t":"2014/11/04 12:21:09","v":39},{"t":"2014/11/04 12:22:10","v":37.8},{"t":"2014/11/04 12:23:10","v":39.5},{"t":"2014/11/04 12:24:10","v":37.7},{"t":"2014/11/04 12:25:10","v":39.4},{"t":"2014/11/04 12:26:10","v":38.3},{"t":"2014/11/04 12:27:10","v":39.6},{"t":"2014/11/04 12:28:10","v":38.8},{"t":"2014/11/04 12:29:10","v":39.6},{"t":"2014/11/04 12:30:10","v":39.9},{"t":"2014/11/04 12:31:11","v":39.8},{"t":"2014/11/04 12:32:13","v":39.5},{"t":"2014/11/04 12:33:13","v":39.3},{"t":"2014/11/04 12:34:13","v":39.1},{"t":"2014/11/04 12:35:14","v":39.5},{"t":"2014/11/04 12:36:14","v":39.4},{"t":"2014/11/04 12:37:14","v":39.5},{"t":"2014/11/04 12:38:15","v":39},{"t":"2014/11/04 12:39:15","v":41},{"t":"2014/11/04 12:40:15","v":40.3},{"t":"2014/11/04 12:41:16","v":40.1},{"t":"2014/11/04 12:42:16","v":39.4},{"t":"2014/11/04 12:43:16","v":40.2},{"t":"2014/11/04 12:44:16","v":38.9},{"t":"2014/11/04 12:45:16","v":40.2},{"t":"2014/11/04 12:46:16","v":39.1},{"t":"2014/11/04 12:47:16","v":40.9},{"t":"2014/11/04 12:48:16","v":39.7},{"t":"2014/11/04 12:49:17","v":40.8}],"label":"CPU Usage"}
+
+# Group Hostname
+
+Get hostname of the machine
+
+## Hostname [/system/hostname]
+
++ Model (application/json)
+
+    + Body
+    
+            {
+                "hostname": "Moxa"
+            }
+
+### Get current hostname [GET]
++ Response 200 (application/json)
+
+    [Hostname][]
+
+### Set hostname [PUT]
+
++ Response 200 (application/json)
+
+    [Hostname][]
+
+# Group Ethernet
+Status related resources of the **Ethernet API**
+
+## Ethernet Collection [/network/ethernet]
+
+### List All Ethernet [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "collection": [
+                {
+                    "id":1,
+                    "name":"eth0",
+                    "type":"LAN",
+                    "ip":"192.168.3.127",
+                    "mac":"FF:FF:FF:FF:FF:FF",
+                    "netmask":"255.255.255.0",
+                    "subnet":"192.168.3.0",
+                    "gateway":"192.168.3.254",
+                    "firstDns":"8.8.8.8",
+                    "secondDns":"8.8.4.4",
+                    "thirdDns":"",
+                    "currentStatus":1,
+                    "enable":1,
+                    "enableDefaultGateway":0,
+                    "enableDhcp":0,
+                    "enableTrunking":0
+                },
+                {
+                    "id":2,
+                    "name":"eth1",
+                    "type":"LAN",
+                    "ip":"192.168.3.127",
+                    "mac":"FF:FF:FF:FF:FF:FF",
+                    "netmask":"255.255.255.0",
+                    "subnet":"192.168.3.0",
+                    "gateway":"192.168.3.254",
+                    "firstDns":"8.8.8.8",
+                    "secondDns":"8.8.4.4",
+                    "thirdDns":"",
+                    "currentStatus":1,
+                    "enable":1,
+                    "enableDefaultGateway":0,
+                    "enableDhcp":0,
+                    "enableTrunking":0
+                }
+              ],
+              "total": 2,
+              "resources": [1,2]
+            }
+
+# Group Wi-Fi
+Status related resources of the **Wi-Fi API**
+
+## Wi-Fi Collection [/network/wireless/iface{?collection}]
+
+### List All Wi-Fi [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "collection": [
+                {
+                    "id": 1,
+                    "name": "wlan0",
+                    "enable": 1,
+                    "mode": 0,
+                    "currentStatus": 1,
+                    "mac": "00:11:22:33:44:55",
+                    "tx": 12302,
+                    "rx": 891,
+                    "ap": {
+                        "blacklist": 1,
+                        "mode": 1,
+                        "ssid": "MIRF-AP0",
+                        "channel": 3,
+                        "beacon": 500,
+                        "preamble": 1,
+                        "broadcastSsid": 0,
+                        "ip": "192.168.5.127",
+                        "netmask": "255.255.255.0",
+                        "gateway": "192.168.5.254",
+                        "security": {
+                            "mode": "none",
+                            "auth": 0, 
+                            "encryption": 2, 
+                            "key": [
+                                "moxamoxa", 
+                                "", 
+                                "", 
+                                ""
+                            ], 
+                            "mode": 4, 
+                            "psk": "moxamoxa", 
+                            "serverIp": "", 
+                            "serverPort": "", 
+                            "txKey": 0,
+                            "serverKey": "moxamoxa"
+                        },
+                        "supportChannels": {
+                            "band24": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                            "band50": [36, 40, 44, 48, 52, 56, 60, 64, 149, 153, 157, 161, 165]
+                        }
+                    },
+                    "client": {
+                        "gateway": "192.168.5.254",
+                        "ip": "192.168.5.127",
+                        "dhcpc": 1,
+                        "signal": -89,
+                        "network": [
+                            {
+                                "enable": 0,
+                                "ssid": "test1",
+                                "priority": 1,
+                                "identity": "test",
+                                "keyFormat": 1,
+                                "mode": 3,
+                                "password": "test"
+                            }
+                        ],
+                        "netmask": "255.255.255.0"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "wlan1",
+                    "enable": 1,
+                    "mode": 1,
+                    "currentStatus": 1,
+                    "mac": "00:11:22:33:44:55",
+                    "tx": 12302,
+                    "rx": 891,
+                    "ap": {
+                        "blacklist": 1,
+                        "mode": 1,
+                        "ssid": "MIRF-AP0",
+                        "channel": 3,
+                        "beacon": 500,
+                        "preamble": 1,
+                        "broadcastSsid": 0,
+                        "ip": "192.168.5.127",
+                        "netmask": "255.255.255.0",
+                        "gateway": "192.168.5.254",
+                        "security": {
+                            "mode": 0,
+                            "auth": 0, 
+                            "encryption": 2, 
+                            "key": [
+                                "moxamoxa", 
+                                "", 
+                                "", 
+                                ""
+                            ], 
+                            "psk": "moxamoxa", 
+                            "serverIp": "", 
+                            "serverPort": "", 
+                            "txKey": 0,
+                            "serverKey": "moxamoxa"
+                        },
+                        "supportChannels": {
+                            "band24": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                            "band50": [36, 40, 44, 48, 52, 56, 60, 64, 149, 153, 157, 161, 165]
+                        }
+                    },
+                    "client": {
+                        "dhcpc": 1,
+                        "ip": "192.168.5.127",
+                        "netmask": "255.255.255.0",
+                        "gateway": "192.168.5.254",
+                        "signal": -89,
+                        "network": [
+                            {
+                                "enable": 0,
+                                "priority": 1,
+                                "ssid": "test1",
+                                "mode": 0,
+                                "keyFormat": "ascii",
+                                "psk": ""
+                            },
+                            {
+                                "enable": 0,
+                                "priority": 2,
+                                "ssid": "test2",
+                                "mode": 1,
+                                "keyFormat": "hex",
+                                "psk": "moxamoxa"
+                            }
+                        ]
+                    }
+
+                }
+              ],
+              "total": 2
+            }
+
+## Wi-Fi Collection [/network/wireless/iface/{id}]
+
+### List All Wi-Fi [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "collection": [
+                {
+                    "id": 1,
+                    "name": "wlan0",
+                    "enable": 1,
+                    "mode": 0,
+                    "currentStatus": 1,
+                    "mac": "00:11:22:33:44:55",
+                    "tx": 12302,
+                    "rx": 891,
+                    "ap": {
+                        "blacklist": 1,
+                        "mode": 1,
+                        "ssid": "MIRF-AP0",
+                        "channel": 3,
+                        "beacon": 500,
+                        "preamble": 1,
+                        "broadcastSsid": 0,
+                        "ip": "192.168.5.127",
+                        "netmask": "255.255.255.0",
+                        "gateway": "192.168.5.254",
+                        "security": {
+                            "mode": "none",
+                            "auth": 0, 
+                            "encryption": 2, 
+                            "key": [
+                                "moxamoxa", 
+                                "", 
+                                "", 
+                                ""
+                            ], 
+                            "mode": 4, 
+                            "psk": "moxamoxa", 
+                            "serverIp": "", 
+                            "serverPort": "", 
+                            "txKey": 0,
+                            "serverKey": "moxamoxa"
+                        },
+                        "supportChannels": {
+                            "band24": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                            "band50": [36, 40, 44, 48, 52, 56, 60, 64, 149, 153, 157, 161, 165]
+                        }
+                    },
+                    "client": {
+                        "gateway": "192.168.5.254",
+                        "ip": "192.168.5.127",
+                        "dhcpc": 1,
+                        "network": [
+                            {
+                                "enable": 0,
+                                "ssid": "test1",
+                                "priority": 1,
+                                "identity": "test",
+                                "keyFormat": 1,
+                                "mode": 3,
+                                "password": "test"
+                            }
+                        ],
+                        "netmask": "255.255.255.0"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "wlan1",
+                    "enable": 1,
+                    "mode": 1,
+                    "currentStatus": 1,
+                    "mac": "00:11:22:33:44:55",
+                    "tx": 12302,
+                    "rx": 891,
+                    "ap": {
+                        "blacklist": 1,
+                        "mode": 1,
+                        "ssid": "MIRF-AP0",
+                        "channel": 3,
+                        "beacon": 500,
+                        "preamble": 1,
+                        "broadcastSsid": 0,
+                        "ip": "192.168.5.127",
+                        "netmask": "255.255.255.0",
+                        "gateway": "192.168.5.254",
+                        "security": {
+                            "mode": 0,
+                            "auth": 0, 
+                            "encryption": 2, 
+                            "key": [
+                                "moxamoxa", 
+                                "", 
+                                "", 
+                                ""
+                            ], 
+                            "psk": "moxamoxa", 
+                            "serverIp": "", 
+                            "serverPort": "", 
+                            "txKey": 0,
+                            "serverKey": "moxamoxa"
+                        },
+                        "supportChannels": {
+                            "band24": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                            "band50": [36, 40, 44, 48, 52, 56, 60, 64, 149, 153, 157, 161, 165]
+                        }
+                    },
+                    "client": {
+                        "dhcpc": 1,
+                        "ip": "192.168.5.127",
+                        "netmask": "255.255.255.0",
+                        "gateway": "192.168.5.254",
+                        "network": [
+                            {
+                                "enable": 0,
+                                "priority": 1,
+                                "ssid": "test1",
+                                "mode": 0,
+                                "keyFormat": "ascii",
+                                "psk": ""
+                            },
+                            {
+                                "enable": 0,
+                                "priority": 2,
+                                "ssid": "test2",
+                                "mode": 1,
+                                "keyFormat": "hex",
+                                "psk": "moxamoxa"
+                            }
+                        ]
+                    }
+
+                }
+              ],
+              "total": 2
+            }
+
+## Wi-Fi SSID [/network/wireless/ssid{?collection}]
+
+### Retreive Wi-Fi ssid list [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "collection":
+                [
+                    {
+                        "name": "MOXA-WIFI",
+                        "encrypt": 0
+                    },
+                    {
+                        "name": "MIRF-OLD",
+                        "encrypt": 0
+                    }
+                            
+                ]
+              
+            }
+            
+## Wi-Fi Blacklist [/network/wireless/blacklist/{id}]
+
+### Retreive Wi-Fi black list [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "enable": 1,
+                "collection": [
+                {
+                    "id": 1,
+                    "mac": "00:20:30:40:50:60",
+                    "desc": "test"
+                },
+                {
+                    "id": 2,
+                    "mac": "00:00:30:40:50:60",
+                    "desc": ""
+                }
+                ]
+            }
+
+# Group DNS
+Status related resources of the **DNS API**
+
+## DNS [/network/dns]
+
+### Retreive DNS profile list [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "resources": [
+                            "Current", 
+                            "LAN1", 
+                            "LAN2", 
+                            "Cellular1",
+                            "Cellular2",
+                            "Cellular3", 
+                            "Wifi1", 
+                            "Wifi2"
+                        ]
+              
+            }
+            
+## DNS [/network/dns{?collection}]
+
+### Retreive DNS profile list and their data [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "collection": [
+                {
+                    "profile":"current", 
+                    "dns1": "1.1.1.1",
+                    "dns2": "2.2.2.2",
+                    "dns3": "3.3.3.3"
+                },
+                {
+                    "profile":"eth0", 
+                    "dns1": "",
+                    "dns2": "",
+                    "dns3": ""
+                },
+                {
+                   "profile":"eth1", 
+                    "dns1": "",
+                    "dns2": "",
+                    "dns3": ""
+                }
+                    ]
+              
+            }
+            
+## DNS [/network/dns/{profile}]
+### Retreive DNS obtained by a specific interface[GET]
++ Parameters
+    + profile (required, TEXT, `Current`) ... Associated interface. Choose among {Current, LAN1, LAN2, Cellular1, Cellular2, Cellular3, Wifi1, Wifi2}
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              
+                "dns1": "1.1.1.1",
+                "dns2": "2.2.2.2",
+                "dns3": "3.3.3.3"
+            
+            }
+            
+## DNS [/network/dns/current]
+
+### Update current DNS [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "dns1": "1.1.1.1",
+                "dns2": "2.2.2.2",
+                "dns3": "3.3.3.3"
+            }
+            
+# Group DHCP
+Status related resources of the **DHCP API**
+
+## DHCP [/network/dhcpd{?collection}]
+
+### List All DHCP [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "currentStatus": 1,
+              "collection": [
+                {
+                    "id": "eth0",
+                    "enable":1,
+                    "dhcpClient": 1,
+                    "routers": "192.168.3.127",
+                    "subnet": "192.168.3.0",
+                    "netmask": "255.255.255.0",
+                    "startIP": "192.168.3.128",
+                    "endIP": "192.168.3.253",
+                    "dns1": "8.8.8.1",
+                    "dns2": "8.8.8.2",
+                    "dns3": "",
+                    "domainName":"moxa.com",
+                    "leaseTime": 3600
+                },
+                {
+                    "id": "eth1",
+                    "enable":0,
+                    "dhcpClient": 0,
+                    "routers": "192.168.3.127",
+                    "subnet": "192.168.3.0",
+                    "netmask": "255.255.255.0",
+                    "startIP": "192.168.3.128",
+                    "endIP": "192.168.3.253",
+                    "dns1": "8.8.8.1",
+                    "dns2": "8.8.8.2",
+                    "dns3": "",
+                    "domainName":"moxa.com",
+                    "leaseTime": 3600
+                },
+                {
+                    "id": "wlan0",
+                    "enable":0,
+                    "dhcpClient": 1,
+                    "routers": "192.168.3.127",
+                    "subnet": "192.168.3.0",
+                    "netmask": "255.255.255.0",
+                    "startIP": "192.168.3.128",
+                    "endIP": "192.168.3.253",
+                    "dns1": "8.8.8.1",
+                    "dns2": "8.8.8.2",
+                    "dns3": "",
+                    "domainName":"moxa.com",
+                    "leaseTime": 3600
+                }
+              ]
+            }
+            
+# Group NTP
+Status related resources of the **NTP API**
+
+## NTP Current Time [/system/time/info]
+
+### Retreive NTP Current Time [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "time": "2014/04/28 12:00:00",
+                "timezone": "+08:00,1",
+                "dst": 0
+            }
+            
+## NTP Config Information [/system/time/conf]
+
+### Retreive NTP Config Information [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "enableNtp": 1,
+                "ntpServers": [ "pool.ntp.org", "asia.pool.ntp.org" ],
+                "ntpInterval": 10,
+                "time": "2014/04/28 12:00:00",
+                "timezone": "+08:00,1",
+                "dst": 0
+            }
+            
+# Group Serial
+Status related resources of the **Serial API**
+
+Acceptable input data:
+
+- type INTERNAL, EXTERNAL
+- parity 0: none, 1: odd, 2: even
+- flowControl 0: none, 1: SW flow control, 2: HW flow control, 3: Both
+- interface 0: RS232, 1: RS485 2-wires, 2: RS422, 3: RS485 4-wires
+- stopBits 0: no, 1: yes
+- dataBits 5: CS5, 6: CS6, 7: CS7, 8: CS8
+
+## Serial [/peripheral/serial{?collection}]
+
+### List All Serial [GET]
++ Parameters
+    + collection (optional, boolean) ... if true, return all collection's data embedd with cellular
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "collection": [
+                {  
+                    "id":1,
+                    "name":"/dev/ttyM0",
+                    "type":"EXTERNAL",
+                    "interface": 0,
+                    "baudrate":19200,
+                    "parity":0,
+                    "stopBits":0,
+                    "dataBits":8,
+                    "flowControl":0
+                },{  
+                    "id":2,
+                    "name":"/dev/ttyM0",
+                    "type":"EXTERNAL",
+                    "interface": 0,
+                    "baudrate":19200,
+                    "parity":0,
+                    "stopBits":0,
+                    "dataBits":8,
+                    "flowControl":0
+                }
+              ]
+            }
+
+# Group SNMPd
+Status related resources of the **SNMP API**
+
+## SNMPd [/network/snmpd]
+
+### Retreive SNMP Agent Settings [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+
+                "enable": 1,
+                "readCommunity": "public",
+                "modified": 0,
+                "id": 1,
+                "writeCommunity": "private",
+                "currentStatus": 1,
+                "port": 161,
+                "trustedIp": "192.168.27.254"        
+
+            }
+            
+### Retreive SNMP Agent Settings [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+
+                "enable": 1,
+                "readCommunity": "hello",
+                "modified": 0,
+                "id": 1,
+                "writeCommunity": "world",
+                "currentStatus": 1,
+                "port": 161,
+                "trustedIp": "192.168.27.254"        
+
+            }
+            
+# Group SSHd
+Status related resources of the **SSH API**
+
+## SSH [/network/sshd]
+
+### Retreive SSH Settings [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "currentStatus": 0,
+                "enable": 1,
+                "id": 1,
+                "modified": 0
+            }
+
+# Group OpenVPN
+Status related resources of the **OpenVPN API**
+
+## OpenVPN [/network/openvpn]
+
+### Retreive OpenVPN Settings [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "id": 1,
+              "mode": 0,
+              "enable": 0,
+              "currentStatus": 1,
+              "lzoDatacompression": 1,
+              "hmacAuthAlgo": "None",
+              "vpnRemoteIp": "10.8.0.1",
+              "remoteServerIp": "192.168.27.202",
+              "cipherAlgo": "None",
+              "password": "",
+              "listenPort": 1194,
+              "tunProtocol": "udp",
+              "certificationType": "Certification Password (TLS)",
+              "username": "",
+              "renegotiationInterval": "120",
+              "cbAdditionalTlsAuth": 0,
+              "additionalTlsAuthDirection": 0,
+              "vpnLocalIp": "10.8.0.2",
+              "vpnRemoteSubnetMask": "255.255.255.0",
+              "_file": {
+                "path": "/api/v1/network/openvpn/config/files/",
+                "filename": [
+                  
+                ]
+              }
+            }
+            
+### Retreive OpenVPN Settings [PUT]
++ Response 500 (application/json)
+
+    + Body
+            
+            {
+              "id": 1,
+              "mode": 0,
+              "enable": 0,
+              "currentStatus": 1,
+              "lzoDatacompression": 1,
+              "hmacAuthAlgo": "None",
+              "vpnRemoteIp": "10.8.0.1",
+              "remoteServerIp": "192.168.27.202",
+              "cipherAlgo": "None",
+              "password": "",
+              "listenPort": 1194,
+              "tunProtocol": "udp",
+              "certificationType": "Certification Password (TLS)",
+              "username": "",
+              "renegotiationInterval": "120",
+              "cbAdditionalTlsAuth": 0,
+              "additionalTlsAuthDirection": 0,
+              "vpnLocalIp": "10.8.0.2",
+              "vpnRemoteSubnetMask": "255.255.255.0",
+              "_file": {
+                "path": "/api/v1/network/openvpn/config/files/",
+                "filename": [
+                  
+                ]
+              }
+            }
+            
+# Group IPsec
+Status related resources of the **IPsec API**
+
+## IPsec [/network/ipsec]
+
+### Retreive IPsec Settings [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "enable": 0,
+              "currentStatus": 0,
+              "mode": 0,
+              "ipType": 0,
+              "transModeTable": {
+                "transRemoteVpnInterface": 0,
+                "transAuthEnable": 1,
+                "transRemoteVpnSubnet": "255.255.255.0",
+                "authKey": "1234567890123456",
+                "transEncryptEnable": 0,
+                "transServerIp": "192.168.0.0",
+                "transClientIp": "127.0.0.0",
+                "transRemoteVpnIp": "10.10.10.10",
+                "encryptKey": "123456789012345678901234",
+                "serveAs": 0
+              },
+              "tunnelModeTable": {
+                "tunnelLocalIp": "192.168.2.1",
+                "tunnelRemoteVpnInterface": 0,
+                "tunnelAuthEnable": 1,
+                "tunnelRemoteVpnSubnet": "255.255.255.0",
+                "tunnelEncryptEnable": 0,
+                "tunnelRemoteIp": "192.168.2.2",
+                "localVpnSubnet": "255.255.255.0",
+                "preshareKey": "preshareKey123",
+                "authAlgo": 0,
+                "encryptAlgo": 0,
+                "tunnelRemoteVpnIp": "6.6.6.6",
+                "localVpnIp": "10.10.10.10"
+              }
+            }
+            
+# Group VRRP
+Status related resources of the **VRRP API**
+
+## VRRP [/network/vrrp]
+
+### Retreive VRRP Settings [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "id": 1,
+              "vrrpEnable": 1,
+              "inPriority": 60,
+              "inVirtualId": 123,
+              "exVirtualId": 123,
+              "state": 1,
+              "inInterface": "eth0",
+              "exPriority": 60,
+              "inPassword": "passwd",
+              "inVirtualIp": "10.10.1.100",
+              "inIp": "10.10.1.2",
+              "inRemoteIp": "10.10.1.1",
+              "exInterface": "eth1",
+              "exPassword": "passwd",
+              "exVirtualIp": "192.168.27.100",
+              "exIp": "192.168.27.199",
+              "exRemoteIp": "192.168.27.205",
+              "currentStatus": 0,
+              "cbPingChk":1,
+              "pingIp": "8.8.8.8"
+            }
+
+# Group Shorewall
+Status related resources of the **Shorewall API**
+
+## Shorewall [/network/shorewall/package]
+
+### List All Package [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "resources": [
+                  1,
+                  2,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9
+                ]
+              }
+            
+
+## Shorewall [/network/shorewall/package/{id}]
+
+### List One Package [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "id": 1,
+                "name": "default",
+                "providers": [
+                  {
+                    "weight": 1,
+                    "packageId": 1,
+                    "interface": "ppp0",
+                    "id": 1
+                  },
+                  {
+                    "weight": 1,
+                    "packageId": 1,
+                    "interface": "eth0",
+                    "id": 2
+                  }
+                ],
+                "rules": [
+                  {
+                    "protocol": "tcp",
+                    "protocolDetail": "22",
+                    "destination": "eth1",
+                    "source": "eth0",
+                    "packageId": 1,
+                    "action": "ACCEPT",
+                    "id": 1
+                  },
+                  {
+                    "protocol": "icmp",
+                    "protocolDetail": "echo-request",
+                    "destination": "fw",
+                    "source": "eth0",
+                    "packageId": 1,
+                    "action": "ACCEPT",
+                    "id": 2
+                  }
+                ],
+                "combinedQos": [
+                  {
+                    "protocol": "tcp",
+                    "port": "80",
+                    "priority": 3,
+                    "rate": "1000",
+                    "packageId": 1,
+                    "interface": "eth0",
+                    "ceil": "2000",
+                    "id": 1
+                  },
+                  {
+                    "protocol": "tcp",
+                    "port": "22",
+                    "priority": 2,
+                    "rate": "1000",
+                    "packageId": 1,
+                    "interface": "eth1",
+                    "ceil": "2000",
+                    "id": 2
+                  }
+                ],
+                "nat": [],
+                "policy": [
+                  {
+                    "connlimitMask": "",
+                    "limitBurst": "",
+                    "logLevel": "",
+                    "destination": "all",
+                    "source": "all",
+                    "packageId": 1,
+                    "policy": "ACCEPT",
+                    "id": 1,
+                    "deletable": 0
+                  },
+                  {
+                    "connlimitMask": "",
+                    "limitBurst": "",
+                    "logLevel": "",
+                    "destination": "eth0",
+                    "source": "wlan0",
+                    "packageId": 1,
+                    "policy": "ACCEPT",
+                    "id": 2,
+                    "deletable": 1
+                  },
+                  {
+                    "connlimitMask": "",
+                    "limitBurst": "",
+                    "logLevel": "",
+                    "destination": "ppp0",
+                    "source": "wlan0",
+                    "packageId": 1,
+                    "policy": "ACCEPT",
+                    "id": 3,
+                    "deletable": 1
+                  }
+                ],
+                "tunnels": [
+                  {
+                    "zone": "tun0",
+                    "gateway": "0.0.0.0/0",
+                    "packageId": 1,
+                    "type": "ipsec",
+                    "id": 1,
+                    "gatewayZones": "gw"
+                  }
+                ]
+              }
+ 
+ 
+ 
+ 
+## Shorewall Collection [/network/shorewall/package{?collection}]
+### Add package to list [POST]
++ Response 200 (application/json)
+
+            {}
+
+### List all packages [GET]
+
++ Parameters
+    + collection (optional, boolean) ... if true, return all collection's data embedd with package
+
++ Response 200 (application/json)
+ 
+
+
+            {
+                "collection": [
+                  {
+                    "package": {
+                      "providers": [
+                        {
+                          "weight": "1",
+                          "gateway": "-",
+                          "packageId": 1,
+                          "interface": "ppp0",
+                          "copy": "eth2,eth3",
+                          "id": 1
+                        },
+                        {
+                          "weight": "1",
+                          "gateway": "30.40.50.61",
+                          "packageId": 1,
+                          "interface": "eth0",
+                          "copy": "eth2,eth3",
+                          "id": 2
+                        }
+                      ],
+                      "rules": [
+                        {
+                          "protocol": "tcp",
+                          "protocolDetail": "22",
+                          "destination": "eth1",
+                          "source": "eth0",
+                          "packageId": 1,
+                          "action": "ACCEPT",
+                          "id": 1
+                        },
+                        {
+                          "protocol": "icmp",
+                          "protocolDetail": "echo-request",
+                          "destination": "fw",
+                          "source": "eth0",
+                          "packageId": 1,
+                          "action": "ACCEPT",
+                          "id": 2
+                        }
+                      ],
+                      "combinedQos": [
+                        {
+                          "protocol": "tcp",
+                          "port": "80",
+                          "priority": 3,
+                          "rate": "1000",
+                          "packageId": 1,
+                          "interface": "eth0",
+                          "ceil": "2000",
+                          "id": 1
+                        },
+                        {
+                          "protocol": "tcp",
+                          "port": "22",
+                          "priority": 2,
+                          "rate": "1000",
+                          "packageId": 1,
+                          "interface": "eth1",
+                          "ceil": "2000",
+                          "id": 2
+                        }
+                      ],
+                      "nat": [],
+                      "policy": [
+                        {
+                          "connlimitMask": "",
+                          "limitBurst": "",
+                          "logLevel": "",
+                          "destination": "all",
+                          "source": "all",
+                          "packageId": 1,
+                          "policy": "ACCEPT",
+                          "id": 1,
+                          "deletable": 0
+                        },
+                          {
+                            "connlimitMask": "",
+                            "limitBurst": "",
+                            "logLevel": "",
+                            "destination": "eth0",
+                            "source": "wlan0",
+                            "packageId": 1,
+                            "policy": "ACCEPT",
+                            "id": 2,
+                            "deletable": 1
+                          },
+                          {
+                            "connlimitMask": "",
+                            "limitBurst": "",
+                            "logLevel": "",
+                            "destination": "ppp0",
+                            "source": "wlan0",
+                            "packageId": 1,
+                            "policy": "ACCEPT",
+                            "id": 3,
+                            "deletable": 1
+                          }
+                      ],
+                      "tunnels": [
+                        {
+                          "zone": "tun0",
+                          "gateway": "0.0.0.0/0",
+                          "packageId": 1,
+                          "type": "ipsec",
+                          "id": 1,
+                          "gatewayZones": "gw"
+                        }
+                      ]
+                    },
+                    "id": 1,
+                    "name": "default"
+                  },
+                  {
+                    "package": {
+                      "providers": [],
+                      "rules": [],
+                      "combinedQos": [],
+                      "nat": false,
+                      "policy": [],
+                      "tunnels": [
+                        {
+                          "zone": "tun0",
+                          "gateway": "0.0.0.0/0",
+                          "packageId": 2,
+                          "type": "openvpn:7777",
+                          "id": 2,
+                          "gatewayZones": "gw"
+                        }
+                      ]
+                    },
+                    "id": 2,
+                    "name": "my_package"
+                  },
+                  {
+                    "package": {
+                      "providers": [],
+                      "rules": [],
+                      "combinedQos": [],
+                      "nat": false,
+                      "policy": [],
+                      "tunnels": []
+                    },
+                    "id": 3,
+                    "name": "test_package"
+                  }
+                ],
+                "total": 3,
+                "name": "test_web_package",
+                "resources": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+## Shorewall [/network/shorewall/config/activatedPackage/{id}]
+
+### ActivatedPackage [GET]
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "runBit": 0,
+                "id": 1,
+                "packageId": 1,
+                "modified": 1
+            }
+
+### ActivatedPackage [PUT]
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "runBit": 0,
+                "id": 1,
+                "packageId": 1,
+                "modified": 1
+            }
+
+
+## Shorewall [/network/shorewall/config/package/{id}]
+
+### package in shorewall [GET]
++ Response 200 (application/json)
+
+    + Body
+                
+            {
+                "id": 1,
+                "name": "default"
+            }
+
+
+
+
+
+
+
+
+
+
+# Group Executer
+## Executer [/system/executer/program]
+
+### List All Program [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "resources": [
+                  1,
+                  2,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9
+                ]
+              }
+
+
+
+## Executer [/system/executer/program/{id}]
+
+### Retreive Program [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "argument": "-h",
+                "id": 1,
+                "fileName": "WTF"
+            }
+
+### Update Program [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "argument": "-h",
+                "id": 1,
+                "fileName": "WTF"
+            }
+
+
+## Executer [/system/executer/program{?collection}]
+
+### Retreive program list [GET]
++ Response 200 (application/json)
+
+            
+            {
+                "resources": [
+                  1,
+                  2
+                ],
+                "total": 2,
+                "collection": [
+                    {
+                        "argument": "-h",
+                        "id": 1,
+                        "fileName": "my_career"
+                    },
+                    {
+                        "argument": "-h",
+                        "id": 2,
+                        "fileName": "WTF"
+                    }                    
+                ]
+            }
+
+
+
+## Executer [/system/executer/activatedProgram]
+
+### List All Program [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "programId": 3,
+                "id": 1,
+                "runBit": 0,
+                "modified": 1
+            }
+
+            
+            
+# Group NAT
+Status related resources of the **NAT API**
+
+## NAT [/network/nat]
+
+### Retreive NAT [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+              "nat": {
+              }
+            }
+
+# Group Password
+Status related resources of the **Password API**
+
+## Password [/system/password]
+
+### Retreive Password Settings [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "id": 1,
+                "modified": 1,
+                "password": "moxa5566"
+            }
+
+
+# Group Reboot
+Status related resources of the **Reboot API**
+
+## Reboot [/system/reboot]
+
+### Retreive Reboot Settings [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "id": 1,
+                "modified": 1,
+                "enable": 1
+            }
+
+
+# Group Migration
+Status related resources of the **Migration API**
+
+## Migration [/system/migration]
+
+### Retreive Reboot Settings [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "id": 1,
+                "behavior": "export",
+                "runBit": 1
+            }
+
+# Group Scenario
+Status related resources of the **Scenario API**
+
+## Scenario list [/scenario{?collection}]
+
+### Retreive Scenario list [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "resources": [ 1, 2, 3 ],
+                "total": 3,
+                "collection": {
+                    "currentCondition": {
+                        "conditionType": "signal",
+                        "parameter": {
+                            "level": 2,
+                            "interface": "eth0"
+                        },
+                        "actionPriority": 1,
+                        "packageId": -1,
+                        "programId": 1,
+                        "id": "",
+                        "name": "Default"
+                      },
+                     "condition": [
+                        {
+                          "conditionType": "ping",
+                          "parameter": {
+                                "ip": "8.8.8.9",
+                                "times": 2,
+                                "interface": "eth0"
+                            },
+                          "actionPriority": 1,
+                          "threadId": 0,
+                          "packageId": 1,
+                          "programId": 1,
+                          "id": "gkroela-jfiehaiohjr-gjrhehjui-3483n23yghfy",
+                          "name": "Default"
+                        },
+                        {
+                          "conditionType": "signal",
+                          "parameter": {
+                            "level": 2,
+                            "interface": "eth0"
+                            },
+                          "strength": 20,
+                          "programId": 1,
+                          "actionPriority": 3,
+                          "threadId": 0,
+                          "packageId": 1,
+                          "id": "jf843f9834-fn94838f493-fn8479fh439-fhj8439",
+                          "name": "scenario-1"
+                        },
+                        {
+                          "conditionType": "location",
+                          "parameter": {
+                            "startLongitude": 0,
+                            "startLatitude": 0,
+                            "endLatitude": 0,
+                            "endLongitude": 0
+                            },
+                          "actionPriority": 4,
+                          "threadId": 39948,
+                          "endLatitude": 0,
+                          "packageId": 1,
+                          "id": "fjrueihf8-fh4378f78-ks9h9yin9-da24wea23",
+                          "programId": 1,
+                          "name": "scenario-2"
+                        }
+                      ]
+                }
+            }
+
+## Get Scenario [/scenario/{id}]
+
+### Get a Scenario [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "conditionType": "ping",
+                "name": "Default",
+                "parameter": {
+                    "ip": "8.8.8.9",
+                    "times": 2,
+                    "interface": "eth0"
+                },
+                "actionPriority": 1,
+                "threadId": 0,
+                "packageId": 1,
+                "programId": 1,
+                "id": "gkroela-jfiehaiohjr-gjrhehjui-3483n23yghfy"
+              }
+            
+## Add Scenario [/scenario]
+
+### Add a Scenario to list [POST]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "conditionType": "ping",
+                "name": "sdf",
+                "parameter": {
+                    "ip": "8.8.8.9",
+                    "times": 2,
+                    "interface": "eth0"
+                },
+                "actionPriority": 1,
+                "threadId": 0,
+                "packageId": 1,
+                "programId": 1,
+                "id": "gkroela-jfiehaiohjr-gjrhehjui-3483n23yghfy"
+              }
+
+## Scenario Control [/scenario/control]
+### Get Scenario Control Status [GET]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "enable": 0
+            }
+            
+### Set Scenario Control [PUT]
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "enable": 0
+            }
+
+
+# Group Diagnose
+Status related resources of the **Diagnose API**
+
+## Diagnose ping [/network/pingcheck]
+
+### Ping status [PUT]
++ Response 200 (application/json)
+
+            
+            {
+                "pingStatus": 1
+            }
+            
+# Group Signal Tracker
+Status related resources of the **Signal Tracker API**
+
+## Signal Tracker Logs [/system/signal-tracker/info]
+
+### Logs [GET]
++ Response 200 (application/json)
+
+            {
+                "logs": [
+                    {
+                        "id": 1,
+                        "time": "3/4/2014 13:54:47",
+                        "latitude": -27.652990,
+                        "longitude": 152.742109,
+                        "signal": -50
+                    },
+                    {
+                        "id": 2,
+                        "time": "3/4/2014 13:54:47",
+                        "latitude": -27.752990,
+                        "longitude": 152.742109,
+                        "signal": -70
+                    },
+                    {
+                        "id": 3,
+                        "time": "3/4/2014 13:54:47",
+                        "latitude": -27.852990,
+                        "longitude": 152.742109,
+                        "signal": -92
+                    }
+                ]
+            }
+
+## Signal Tracker Conf [/system/signal-tracker/conf]
+
+### Configuration [GET]
++ Response 200 (application/json)
+
+            {
+                "enable": 1,
+                "maxLogs": 100,
+                "timeInterval": 10
+            }
+
+# Group Firmware
+Frimware related resources of the **Firmware API**
+
+## Firmware [/system/firmware]
+
+### Firmware [GET]
+
++ Response 200 (application/json)
+
+        {
+            "version": "1.0",
+            "server": "www.moxa.com"
+        }
+        
+### Firmware upgrade [PUT]
+
++ Response 200 (application/json)
+
+        {
+            "upgrade": 1,
+            "server": "www.moxa.com"
+        }
+            
+# Group Log
+Log related resources of the **Log API**
+
+## Log [/system/log{?modelName}]
++ Parameters
+    + modelName (optional, String) ... filter by model name
+
+### Log [GET]
+
++ Response 200 (application/json)
+
+        {
+        "logs": [
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:03:42"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:03:46"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:03:46"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:04:06"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:04:09"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:04:09"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:04:12"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:04:12"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:04:16"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:04:16"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:04:36"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:04:39"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:04:39"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:04:42"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:04:43"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:04:46"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:04:46"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:06"
+              },
+              {
+                "description": "Initialize ppp1 config done.",
+                "name": "cellular",
+                "time": "Jun 4 16:05:09"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:09"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:05:09"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:09"
+              },
+              {
+                "description": "Save MxCellular success!",
+                "name": "cellular",
+                "time": "Jun 4 16:05:12"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:05:12"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:13"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:05:16"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:05:16"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:36"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:05:39"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:39"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:05:42"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:43"
+              },
+              {
+                "description": "Initialize ppp1 config done.",
+                "name": "cellular",
+                "time": "Jun 4 16:05:46"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:46"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:05:46"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:05:46"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:05:49"
+              },
+              {
+                "description": "ppp1 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:05:52"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:06"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:06"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:09"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:06:10"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:06:12"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:13"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:06:16"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:06:16"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:22"
+              },
+              {
+                "description": "ppp1 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:06:25"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:36"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:36"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:06:40"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:40"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:43"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:06:43"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:06:46"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:06:46"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:06:55"
+              },
+              {
+                "description": "ppp1 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:06:59"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:06"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:06"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:07:10"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:10"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:13"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:07:13"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:07:16"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:07:16"
+              },
+              {
+                "description": "ppp1 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:07:29"
+              },
+              {
+                "description": "Save MxCellular success!",
+                "name": "cellular",
+                "time": "Jun 4 16:07:29"
+              },
+              {
+                "description": "Disconnect PPPD: ppp1 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:36"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:36"
+              },
+              {
+                "description": "ppp1 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:07:40"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:07:40"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:40"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:07:43"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:07:43"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:07:46"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:07:47"
+              },
+              {
+                "description": "ppp1 is connected.",
+                "name": "cellular",
+                "time": "Jun 4 16:08:06"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:08:06"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:08:10"
+              },
+              {
+                "description": "ppp1 is connected.",
+                "name": "cellular",
+                "time": "Jun 4 16:08:10"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:08:10"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:08:13"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:08:13"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:08:17"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:08:17"
+              },
+              {
+                "description": "ppp1 is connected.",
+                "name": "cellular",
+                "time": "Jun 4 16:08:36"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:08:36"
+              },
+              {
+                "description": "ppp0 is dialing...3",
+                "name": "cellular",
+                "time": "Jun 4 16:08:40"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:08:40"
+              },
+              {
+                "description": "ppp0 is dialing...2",
+                "name": "cellular",
+                "time": "Jun 4 16:08:43"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Jun 4 16:08:43"
+              },
+              {
+                "description": "ppp0 is dialing...1",
+                "name": "cellular",
+                "time": "Jun 4 16:08:47"
+              },
+              {
+                "description": "ppp0 dialup failed.",
+                "name": "cellular",
+                "time": "Jun 4 16:08:47"
+              },
+              {
+                "description": "connect broker",
+                "name": "log",
+                "time": "Jun 4 16:09:56"
+              },
+              {
+                "description": "Deregister Sanji controller...",
+                "name": "log",
+                "time": "Jun 4 16:09:56"
+              },
+              {
+                "description": "Register Sanji controller...",
+                "name": "log",
+                "time": "Jun 4 16:09:56"
+              },
+              {
+                "description": "Start Model OK. Waiting for request.",
+                "name": "log",
+                "time": "Jun 4 16:09:56"
+              },
+              {
+                "description": "Register Sanji controller OK.",
+                "name": "log",
+                "time": "Jun 4 16:09:56"
+              },
+              {
+                "description": "The registration is OK!!",
+                "name": "log",
+                "time": "Nov 4 16:09:56"
+              },
+              {
+                "description": "Disconnect PPPD: ppp0 ...",
+                "name": "cellular",
+                "time": "Oct 4 16:03:42"
+              }
+            ]
+          }
